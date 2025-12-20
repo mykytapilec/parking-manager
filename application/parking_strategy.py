@@ -1,22 +1,25 @@
 from abc import ABC, abstractmethod
-from domain.vehicle import Vehicle, ElectricVehicle
-from domain.parking_lot import ParkingLot
-from typing import Optional
+
 
 class ParkingStrategy(ABC):
     @abstractmethod
-    def assign_slot(self, lot: ParkingLot, vehicle: Vehicle) -> Optional[int]:
-        """Return assigned slot index or None if full."""
+    def park(self, parking_lot, vehicle):
         pass
 
+
 class RegularParkingStrategy(ParkingStrategy):
-    def assign_slot(self, lot: ParkingLot, vehicle: Vehicle) -> Optional[int]:
-        if isinstance(vehicle, ElectricVehicle):
-            return None
-        return lot.get_empty_slot_index()
+    def park(self, parking_lot, vehicle):
+        for i, slot in enumerate(parking_lot.regular_slots):
+            if slot is None:
+                parking_lot.regular_slots[i] = vehicle
+                return i
+        return None
+
 
 class ElectricParkingStrategy(ParkingStrategy):
-    def assign_slot(self, lot: ParkingLot, vehicle: Vehicle) -> Optional[int]:
-        if isinstance(vehicle, ElectricVehicle):
-            return lot.get_empty_ev_slot_index()
+    def park(self, parking_lot, vehicle):
+        for i, slot in enumerate(parking_lot.ev_slots):
+            if slot is None:
+                parking_lot.ev_slots[i] = vehicle
+                return i
         return None

@@ -1,17 +1,13 @@
 from domain.parking_lot import ParkingLot
+from domain.vehicle import ElectricVehicle
 from application.parking_strategy import (
     RegularParkingStrategy,
-    ElectricParkingStrategy
+    ElectricParkingStrategy,
 )
 from application.vehicle_factory import VehicleFactory
-from domain.vehicle import ElectricVehicle
 
 
 class ParkingService:
-    """
-    Application service acting as a facade between UI and domain.
-    """
-
     def __init__(self, capacity: int, ev_capacity: int, level: int):
         self.parking_lot = ParkingLot(capacity, ev_capacity, level)
         self.regular_strategy = RegularParkingStrategy()
@@ -24,19 +20,15 @@ class ParkingService:
         model: str,
         color: str,
         is_electric: bool,
-        is_motorcycle: bool
-    ) -> int | None:
-        """
-        Create a vehicle and park it.
-        """
-
+        is_motorcycle: bool,
+    ):
         vehicle = VehicleFactory.create_vehicle(
             reg_num,
             make,
             model,
             color,
             is_electric,
-            is_motorcycle
+            is_motorcycle,
         )
 
         strategy = (
@@ -48,7 +40,4 @@ class ParkingService:
         return self.parking_lot.park_vehicle(vehicle, strategy)
 
     def remove_vehicle(self, slot_index: int, is_ev: bool) -> bool:
-        """
-        Remove a vehicle from the parking lot.
-        """
         return self.parking_lot.remove_vehicle(slot_index, is_ev)

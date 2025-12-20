@@ -2,19 +2,14 @@ from abc import ABC, abstractmethod
 
 
 class Vehicle(ABC):
-    """
-    Abstract base class representing a vehicle in the parking system.
-    """
-
-    def __init__(self, registration_number: str, make: str, model: str, color: str):
-        self.registration_number = registration_number
+    def __init__(self, reg_num: str, make: str, model: str, color: str):
+        self.reg_num = reg_num
         self.make = make
         self.model = model
         self.color = color
 
     @abstractmethod
     def get_type(self) -> str:
-        """Return the type of the vehicle."""
         pass
 
 
@@ -29,30 +24,16 @@ class Motorcycle(Vehicle):
 
 
 class ElectricVehicle(Vehicle):
-    """
-    Base class for electric vehicles.
-    """
-
-    def __init__(
-        self,
-        registration_number: str,
-        make: str,
-        model: str,
-        color: str,
-        charge_level: int = 0,
-    ):
-        super().__init__(registration_number, make, model, color)
-        self.charge_level = charge_level
-
-    def get_type(self) -> str:
-        return "Electric"
+    def __init__(self, reg_num: str, make: str, model: str, color: str):
+        super().__init__(reg_num, make, model, color)
+        self.charge = 100
 
 
 class ElectricCar(ElectricVehicle):
     def get_type(self) -> str:
-        return "ElectricCar"
+        return "Electric Car"
 
 
 class ElectricMotorcycle(ElectricVehicle):
     def get_type(self) -> str:
-        return "ElectricMotorcycle"
+        return "Electric Motorcycle"

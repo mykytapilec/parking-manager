@@ -2,14 +2,11 @@ from domain.vehicle import (
     Car,
     Motorcycle,
     ElectricCar,
-    ElectricMotorcycle
+    ElectricMotorcycle,
 )
 
-class VehicleFactory:
-    """
-    Factory responsible for creating vehicle instances.
-    """
 
+class VehicleFactory:
     @staticmethod
     def create_vehicle(
         reg_num: str,
@@ -17,12 +14,8 @@ class VehicleFactory:
         model: str,
         color: str,
         is_electric: bool,
-        is_motorcycle: bool
+        is_motorcycle: bool,
     ):
-        """
-        Create and return a vehicle based on input flags.
-        """
-
         if is_electric:
             if is_motorcycle:
                 return ElectricMotorcycle(reg_num, make, model, color)
